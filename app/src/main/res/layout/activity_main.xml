@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#1E1E1E">
+
+    <TextView
+        android:id="@+id/tvFrameResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0초 00프레임\n(총 0프레임)"
+        android:textColor="#00FF66"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="00:00.00"
+        android:textColor="#AAAAAA"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnStartPause"
+            android:layout_width="102dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="16dp"
+            android:text="시작"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="107dp"
+            android:layout_height="80dp"
+            android:text="초기화"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF" />
+    </LinearLayout>
+
+    <com.example.aniframeapp.TimelineView
+        android:id="@+id/timelineView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="32dp" />
+
+    <SeekBar
+        android:id="@+id/seekBarZoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        android:progress="50" />
+
+</LinearLayout>
