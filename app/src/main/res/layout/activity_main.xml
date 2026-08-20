@@ -11,9 +11,9 @@
         android:id="@+id/tvFrameResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0초 00프레임\n(총 0프레임)"
-        android:textColor="#00FF66"
-        android:textSize="32sp"
+        android:text="0.00초 (총 0프레임)"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:textAlignment="center" />
 
@@ -26,6 +26,33 @@
         android:textColor="#AAAAAA"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/tv1Comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="1콤마 (24fps): 0 프레임"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv2Comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="2콤마 (12fps): 0 프레임"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv3Comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="3콤마 (8fps): 0 프레임"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,21 +61,34 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnStartPause"
-            android:layout_width="102dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="16dp"
+            android:id="@+id/btnStart"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
             android:text="시작"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnPause"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="일시정지"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:backgroundTint="#FFFFFF" />
 
         <Button
             android:id="@+id/btnReset"
-            android:layout_width="107dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
             android:text="초기화"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:backgroundTint="#FFFFFF" />
     </LinearLayout>
