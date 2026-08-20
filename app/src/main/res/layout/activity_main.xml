@@ -26,30 +26,21 @@
         android:textColor="#AAAAAA"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tv1Comma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commaWheel"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:text="1콤마 (24fps): 0 프레임"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:clipToPadding="false"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp" />
 
     <TextView
-        android:id="@+id/tv2Comma"
+        android:id="@+id/tvSelectedFrames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="2콤마 (12fps): 0 프레임"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv3Comma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="3콤마 (8fps): 0 프레임"
+        android:layout_marginTop="8dp"
+        android:text="1콤마 (24fps) 총 0프레임"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 

@@ -8,6 +8,10 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +24,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var timelineView: TimelineView
     private lateinit var seekBarZoom: SeekBar
-    private lateinit var tv1Comma: TextView
-    private lateinit var tv2Comma: TextView
-    private lateinit var tv3Comma: TextView
+    private lateinit var commaWheel: RecyclerView
+    private lateinit var tvSelectedFrames: TextView
+
+    private var selectedCommaDivisor = 1
+    private var lastTotalFrames = 0
+    private val itemHeightPx by lazy { 50 * resources.displayMetrics.density }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +42,10 @@ class MainActivity : AppCompatActivity() {
         val btnReset = findViewById<Button>(R.id.btnReset)
         timelineView = findViewById(R.id.timelineView)
         seekBarZoom = findViewById(R.id.seekBarZoom)
-        tv1Comma = findViewById(R.id.tv1Comma)
-        tv2Comma = findViewById(R.id.tv2Comma)
-        tv3Comma = findViewById(R.id.tv3Comma)
+        commaWheel = findViewById(R.id.commaWheel)
+        tvSelectedFrames = findViewById(R.id.tvSelectedFrames)
+
+        setupCommaWheel()
 
         timerRunnable = object : Runnable {
             override fun run() {
@@ -52,12 +60,10 @@ class MainActivity : AppCompatActivity() {
 
                 val totalSeconds = elapsedMillis / 1000.0
                 val totalFrames = ((elapsedMillis * 24) / 1000).toInt()
+                lastTotalFrames = totalFrames
 
-                tvFrameResult.text = String.format("%.2f초 (총 %d프레임)", totalSeconds, totalFrames)
-
-                tv1Comma.text = "1콤마 (24fps): ${totalFrames} 프레임"
-                tv2Comma.text = "2콤마 (12fps): ${totalFrames / 2} 프레임"
-                tv3Comma.text = "3콤마 (8fps): ${totalFrames / 3} 프레임"
+                tvFrameResult.text = String.format("%.2f초", totalSeconds)
+                updateSelectedFramesText()
 
                 timelineView.currentFrame = totalFrames
                 timelineView.invalidate()
@@ -87,11 +93,10 @@ class MainActivity : AppCompatActivity() {
             isRunning = false
             startTime = 0L
             pauseOffset = 0L
+            lastTotalFrames = 0
             tvTime.text = "00:00.00"
-            tvFrameResult.text = "0.00초 (총 0프레임)"
-            tv1Comma.text = "1콤마 (24fps): 0 프레임"
-            tv2Comma.text = "2콤마 (12fps): 0 프레임"
-            tv3Comma.text = "3콤마 (8fps): 0 프레임"
+            tvFrameResult.text = "0.00초"
+            updateSelectedFramesText()
             timelineView.currentFrame = 0
             timelineView.invalidate()
         }
@@ -105,5 +110,55 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+    }
+
+    private fun setupCommaWheel() {
+        val items = listOf("1콤마\n(24fps)", "2콤마\n(12fps)", "3콤마\n(8fps)")
+        commaWheel.layoutManager = LinearLayoutManager(this)
+        commaWheel.adapter = CommaWheelAdapter(items)
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(commaWheel)
+
+        commaWheel.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                applyWheelTransform(rv)
+            }
+
+            override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val layoutManager = rv.layoutManager ?: return
+                    val snapView = snapHelper.findSnapView(layoutManager) ?: return
+                    val position = layoutManager.getPosition(snapView)
+                    selectedCommaDivisor = position + 1
+                    updateSelectedFramesText()
+                }
+            }
+        })
+
+        commaWheel.post { applyWheelTransform(commaWheel) }
+    }
+
+    private fun applyWheelTransform(rv: RecyclerView) {
+        val centerY = rv.height / 2f
+        for (i in 0 until rv.childCount) {
+            val child = rv.getChildAt(i)
+            val childCenterY = (child.top + child.bottom) / 2f
+            val offset = (childCenterY - centerY) / itemHeightPx
+            val clamped = offset.coerceIn(-2f, 2f)
+
+            child.rotationX = clamped * -35f
+            child.alpha = (1f - abs(clamped) * 0.5f).coerceIn(0.25f, 1f)
+            child.cameraDistance = 8000f * resources.displayMetrics.density
+        }
+    }
+
+    private fun updateSelectedFramesText() {
+        val label = when (selectedCommaDivisor) {
+            1 -> "1콤마 (24fps)"
+            2 -> "2콤마 (12fps)"
+            else -> "3콤마 (8fps)"
+        }
+        tvSelectedFrames.text = "$label 총 ${lastTotalFrames / selectedCommaDivisor}프레임"
     }
 }
