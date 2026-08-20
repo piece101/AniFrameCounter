@@ -6,14 +6,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CommaWheelAdapter(
-    private val items: List<String>
+    private val items: List<String>,
+    private val layoutRes: Int = R.layout.item_comma_picker
 ) : RecyclerView.Adapter<CommaWheelAdapter.ViewHolder>() {
 
     class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_comma_picker, parent, false) as TextView
+            .inflate(layoutRes, parent, false) as TextView
         return ViewHolder(view)
     }
 

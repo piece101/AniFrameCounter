@@ -1,3 +1,55 @@
 <resources>
     <string name="app_name">AniFrameApp</string>
+
+    <string name="cd_menu_open">메뉴 열기</string>
+    <string name="cd_menu_toggle">메뉴 열기/닫기</string>
+    <string name="cd_back">뒤로가기</string>
+    <string name="cd_exit_selection">선택 모드 나가기</string>
+    <string name="cd_delete">삭제</string>
+    <string name="cd_timeline">애니메이션 타임라인</string>
+
+    <string name="time_placeholder">00:00.00</string>
+    <string name="comma_lock_message">초기화 후 콤마 슬롯을 바꿔주세요.</string>
+    <string name="drawing_no_placeholder">1콤마 (24fps) Total Drawing No. (0)</string>
+    <string name="drawing_no_format">%1$s Total Drawing No. (%2$d)</string>
+    <string name="frames_needed_placeholder">사이에 -장이 필요해요.</string>
+    <string name="frames_needed_format">사이에 %1$d장이 필요해요.</string>
+
+    <string name="btn_play">재생</string>
+    <string name="btn_pause">일시정지</string>
+    <string name="btn_reset">초기화</string>
+    <string name="btn_record_timing">타이밍 기록</string>
+    <string name="btn_clear_timing">타이밍 지우기</string>
+    <string name="btn_save_timing">타이밍 저장</string>
+    <string name="btn_select_all">전체 선택</string>
+    <string name="btn_export">내보내기</string>
+
+    <string name="menu_saved_timings">저장된 타이밍</string>
+    <string name="menu_export_timing">타이밍 내보내기</string>
+    <string name="menu_import_timing">타이밍 불러오기</string>
+    <string name="no_saved_files">저장된 파일이 없습니다.</string>
+
+    <string name="dialog_save_title">타이밍 저장</string>
+    <string name="dialog_save_default_name">제목</string>
+    <string name="dialog_delete_title">삭제 확인</string>
+    <string name="dialog_delete_message">정말로 %1$s을 삭제하시겠습니까?</string>
+    <string name="dialog_save_confirm">저장</string>
+    <string name="dialog_delete_confirm">삭제</string>
+    <string name="dialog_cancel">취소</string>
+
+    <string name="toast_saved">저장되었습니다: %1$s.txt</string>
+    <string name="toast_save_failed">저장 실패: %1$s</string>
+    <string name="toast_select_export">내보낼 파일을 선택해주세요.</string>
+    <string name="toast_unsupported_format">지원하지 않는 파일 형식입니다.</string>
+    <string name="toast_import_complete">불러오기 완료</string>
+    <string name="toast_import_failed">불러오기 실패: %1$s</string>
+
+    <string name="comma_1x">1콤마 (24fps)</string>
+    <string name="comma_2x">2콤마 (12fps)</string>
+    <string name="comma_3x">3콤마 (8fps)</string>
+    <string name="record_label_format">%1$d번째 기록(%2$d번 프레임)</string>
+    <string name="record_label_from_zero">0프레임으로부터</string>
+    <string name="record_label_zero">0프레임</string>
+    <string name="export_chooser_title">타이밍 내보내기</string>
+    <string name="saved_entry_format">%1$d콤마 %2$s</string>
 </resources>
