@@ -11,7 +11,7 @@ class TimelineView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private val paint = Paint().apply {
-        isAntialias = true
+        isAntiAlias = true // 선과 글자를 부드럽게 그려주는 설정
     }
 
     var currentFrame: Int = 0
