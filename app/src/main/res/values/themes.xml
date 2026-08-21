@@ -3,6 +3,7 @@
     <style name="Base.Theme.AniFrameApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">#1E1E1E</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">#1E1E1E</item>
     </style>
 
     <style name="Theme.AniFrameApp" parent="Base.Theme.AniFrameApp" />
