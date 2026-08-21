@@ -20,6 +20,7 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private var savedFiles: List<File> = emptyList()
     private var savedTimingAdapter: SavedTimingAdapter? = null
+    private var backPressedTime = 0L
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
@@ -164,6 +166,26 @@ class MainActivity : AppCompatActivity() {
         setupTimingSlots()
         setupDrawer()
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerScrim.isVisible) {
+                    closeDrawer()
+                    return
+                }
+                val now = System.currentTimeMillis()
+                if (now - backPressedTime < 2000) {
+                    finish()
+                } else {
+                    backPressedTime = now
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.toast_press_back_again),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
         timelineView.onUserTouch = {
             hasMovedFromReset = true
             if (isRunning) {
@@ -185,7 +207,7 @@ class MainActivity : AppCompatActivity() {
                 val displaySec = seconds % 60
                 val millis = ((elapsedMillis % 1000) / 10).toInt()
 
-                tvTime.text = String.format(Locale.getDefault(), "%02d:%02d.%02d", minutes, displaySec, millis)
+                tvTime.text = String.format(Locale.getDefault(), "%02d:%02d.%02ds", minutes, displaySec, millis)
 
                 val totalFrames = ((elapsedMillis * 24) / 1000).toInt()
                 lastTotalFrames = totalFrames

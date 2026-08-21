@@ -7,7 +7,9 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import androidx.core.graphics.withTranslation
+import kotlin.math.abs
 import kotlin.math.ceil
 
 class TimelineView @JvmOverloads constructor(
@@ -33,7 +35,10 @@ class TimelineView @JvmOverloads constructor(
 
     private var scrollOffsetPx = 0f
     private var lastTouchX = 0f
+    private var lastTouchY = 0f
+    private var gestureDirection = 0
     private val dragSensitivity = 0.6f
+    private val touchSlop by lazy { ViewConfiguration.get(context).scaledTouchSlop }
 
     var onUserTouch: (() -> Unit)? = null
 
@@ -128,26 +133,52 @@ class TimelineView @JvmOverloads constructor(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 lastTouchX = event.x
+                lastTouchY = event.y
+                gestureDirection = 0
                 onUserTouch?.invoke()
+                parent?.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
-                val divisor = commaDivisor.coerceAtLeast(1)
-                val zoomFactor = zoomScale / baseZoom
-                val dx = (event.x - lastTouchX) * dragSensitivity * divisor * zoomFactor
-                var newOffset = (scrollOffsetPx - dx).coerceIn(paddedMinScroll(), paddedMaxScroll())
+                val totalDx = event.x - lastTouchX
+                val totalDy = event.y - lastTouchY
 
-                if (divisor > 1) {
-                    val fw = frameWidth()
-                    val centerFrameRaw = (newOffset + width / 2f) / fw
-                    val snapped = Math.round(centerFrameRaw / divisor) * divisor
-                    newOffset = (snapped * fw - width / 2f).coerceIn(paddedMinScroll(), paddedMaxScroll())
+                if (gestureDirection == 0) {
+                    if (abs(totalDx) > touchSlop || abs(totalDy) > touchSlop) {
+                        gestureDirection = if (abs(totalDx) > abs(totalDy)) 1 else 2
+                        if (gestureDirection == 2) {
+                            parent?.requestDisallowInterceptTouchEvent(false)
+                            return false
+                        }
+                    }
                 }
 
-                scrollOffsetPx = newOffset
-                lastTouchX = event.x
-                invalidate()
+                if (gestureDirection == 2) {
+                    return false
+                }
+
+                if (gestureDirection == 1) {
+                    val divisor = commaDivisor.coerceAtLeast(1)
+                    val zoomFactor = zoomScale / baseZoom
+                    val dx = (event.x - lastTouchX) * dragSensitivity * divisor * zoomFactor
+                    var newOffset = (scrollOffsetPx - dx).coerceIn(paddedMinScroll(), paddedMaxScroll())
+
+                    if (divisor > 1) {
+                        val fw = frameWidth()
+                        val centerFrameRaw = (newOffset + width / 2f) / fw
+                        val snapped = Math.round(centerFrameRaw / divisor) * divisor
+                        newOffset = (snapped * fw - width / 2f).coerceIn(paddedMinScroll(), paddedMaxScroll())
+                    }
+
+                    scrollOffsetPx = newOffset
+                    lastTouchX = event.x
+                    lastTouchY = event.y
+                    invalidate()
+                }
             }
-            MotionEvent.ACTION_UP -> performClick()
+            MotionEvent.ACTION_UP -> {
+                parent?.requestDisallowInterceptTouchEvent(false)
+                if (gestureDirection != 2) performClick()
+            }
         }
         return true
     }

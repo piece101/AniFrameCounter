@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AniFrameApp</string>
+    <string name="credit_text">This app has made by\nA.I 90%, 10% by Human</string>
 
     <string name="cd_menu_open">메뉴 열기</string>
     <string name="cd_menu_toggle">메뉴 열기/닫기</string>
@@ -8,7 +9,7 @@
     <string name="cd_delete">삭제</string>
     <string name="cd_timeline">애니메이션 타임라인</string>
 
-    <string name="time_placeholder">00:00.00</string>
+    <string name="time_placeholder">00:00.00s</string>
     <string name="comma_lock_message">초기화 후 콤마 슬롯을 바꿔주세요.</string>
     <string name="drawing_no_placeholder">1콤마 (24fps) Total Drawing No. (0)</string>
     <string name="drawing_no_format">%1$s Total Drawing No. (%2$d)</string>
@@ -43,6 +44,7 @@
     <string name="toast_unsupported_format">지원하지 않는 파일 형식입니다.</string>
     <string name="toast_import_complete">불러오기 완료</string>
     <string name="toast_import_failed">불러오기 실패: %1$s</string>
+    <string name="toast_press_back_again">앱을 종료할 때 뒤로가기 버튼을 한 번 더 누르면 종료됩니다.</string>
 
     <string name="comma_1x">1콤마 (24fps)</string>
     <string name="comma_2x">2콤마 (12fps)</string>
