@@ -28,6 +28,7 @@ class TimelineView @JvmOverloads constructor(
     private var zoomScale: Float = 1.5f
     private val minZoom = 0.3f
     private val maxZoom = 6f
+    private val baseZoom = 1.5f
     val maxSeconds = 120
 
     private var scrollOffsetPx = 0f
@@ -131,7 +132,8 @@ class TimelineView @JvmOverloads constructor(
             }
             MotionEvent.ACTION_MOVE -> {
                 val divisor = commaDivisor.coerceAtLeast(1)
-                val dx = (event.x - lastTouchX) * dragSensitivity * divisor
+                val zoomFactor = zoomScale / baseZoom
+                val dx = (event.x - lastTouchX) * dragSensitivity * divisor * zoomFactor
                 var newOffset = (scrollOffsetPx - dx).coerceIn(paddedMinScroll(), paddedMaxScroll())
 
                 if (divisor > 1) {

@@ -54,10 +54,16 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             android:paddingStart="24dp"
@@ -134,7 +140,7 @@
                 <Button
                     android:id="@+id/btnPlayPause"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
                     android:text="@string/btn_play"
@@ -146,7 +152,7 @@
                 <Button
                     android:id="@+id/btnReset"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
                     android:text="@string/btn_reset"
                     android:textSize="15sp"
@@ -204,7 +210,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="63dp"
                 android:layout_marginTop="18dp"
                 android:orientation="horizontal"
                 android:background="#000000">
@@ -215,8 +221,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clipToPadding="false"
-                    android:paddingTop="32dp"
-                    android:paddingBottom="32dp" />
+                    android:paddingTop="21dp"
+                    android:paddingBottom="21dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bottomSlot"
@@ -224,8 +230,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clipToPadding="false"
-                    android:paddingTop="32dp"
-                    android:paddingBottom="32dp"
+                    android:paddingTop="21dp"
+                    android:paddingBottom="21dp"
                     android:visibility="gone" />
 
                 <TextView
@@ -237,7 +243,7 @@
                     android:padding="4dp"
                     android:text="@string/frames_needed_placeholder"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -254,13 +260,15 @@
 
         </LinearLayout>
 
+        </ScrollView>
+
     </LinearLayout>
 
     <View
         android:id="@+id/drawerScrim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#33888888"
+        android:background="#77000000"
         android:visibility="gone"
         android:clickable="true"
         android:focusable="true" />
